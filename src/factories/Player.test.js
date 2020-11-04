@@ -30,7 +30,7 @@ test('tests to see if Player.attack() will not return coordinates if type does n
 });
 
 
-test('tests to see if Player.attack() will work with coords in hits array', () => {
+test.skip('tests to see if Player.attack() will work with coords in hits array', () => {
     const board = {
         misses: [],
         ships: [
