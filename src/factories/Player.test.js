@@ -1,6 +1,6 @@
 import Player from './Player'
 
-test('tests to see if Player.attack() return an integer from 0-10', () => {
+test.skip('tests to see if Player.attack() return an integer from 0-10', () => {
     const Player2 = Player('CPU', 'CPU')
     const board = {
         shots: [],
@@ -11,7 +11,7 @@ test('tests to see if Player.attack() return an integer from 0-10', () => {
     expect(Player2.attack(board)[1]).toBeLessThanOrEqual(10);
 });
 
-test('tests to see if Player.attack() will not return coordinates if type does not equal CPU', () => {
+test.skip('tests to see if Player.attack() will not return coordinates if type does not equal CPU', () => {
     const board = {
         shots: [],
     }
@@ -19,7 +19,7 @@ test('tests to see if Player.attack() will not return coordinates if type does n
     expect(Player2.attack(board)).toBe(undefined);
 });
 
-test('tests to see if Player.attack() will work with coords in shots array', () => {
+test.skip('tests to see if Player.attack() will work with coords in shots array', () => {
     const board = {
         shots: [[0, 0], [0, 1], [1, 0]],
     }
