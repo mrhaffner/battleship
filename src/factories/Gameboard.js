@@ -11,12 +11,15 @@ const Gameboard = () => {
             let coordStr = JSON.stringify(coords);
             if (shipStr.includes(coordStr)) {
                 ship.hit(coords);
+                shots.push(coords);
                 return;
             }
             misses.push(coords);
+            shots.push(coords);
         } 
     };
     const misses = [];
+    const shots = []
     const status = () => {
         for (let ship of ships) {
             if (!ship.isSunk()) {
@@ -25,7 +28,7 @@ const Gameboard = () => {
             return true;
         }
     };
-    return { ships, addShip, receiveAttack, misses, status };
+    return { ships, addShip, receiveAttack, misses, status, shots };
 };
 
 export default Gameboard;
