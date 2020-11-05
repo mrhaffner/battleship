@@ -14,9 +14,9 @@ const Gameboard = () => {
                 shots.push(coords);
                 return;
             }
-            misses.push(coords);
-            shots.push(coords);
         } 
+        misses.push(coords);
+        shots.push(coords);
     };
     const misses = [];
     const shots = []
