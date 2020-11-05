@@ -1,5 +1,6 @@
 import React from 'react';
 import Cell from './Cell'
+import styled from 'styled-components';
 
 const Grid = () => {
 
@@ -12,10 +13,15 @@ const Grid = () => {
         return cells
     }
 
+    const Container = styled.div`
+        display: grid;
+        grid-template-columns: repeat(10, 20px);
+    `;
+
     return (
-        <div>
+        <Container>
             { createCells() }
-        </div>
+        </Container>
     )
 }
 
