@@ -1,6 +1,6 @@
 const Player = (name, type) => {
     const getRandomCoords = (arr) => {
-        const getInt = () => Math.floor(Math.random() * Math.floor(2));
+        const getInt = () => Math.floor(Math.random() * Math.floor(10));
         arr.push(getInt());
         arr.push(getInt());
         return arr

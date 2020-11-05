@@ -3,17 +3,20 @@ import styled from 'styled-components';
 
 const Cell = (props) => {
     const Container = styled.div`
-    background: purple;
-    height: 20px;
-    width: 20px;
-    border: 1px black solid;
-`;
+        background-color: lightblue;
+        height: 3.5vh;
+        width: 3.5vh;
+        border: .2vh black solid;
+    `;
+
+    const gimme = (e) => {
+        e.target.textContent = 'x'
+        console.log(id)
+    }
 
     const { id } = props
     return (
-        <Container id={id}>
-
-        </Container>
+        <Container id={id} onClick={gimme}></Container>
     )
 }
 
