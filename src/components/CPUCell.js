@@ -12,23 +12,22 @@ font-size: 3vh;
 
 const CPUCell = (props) => {
 
-    const { id, setTurn, board2, turn } = props
+    const { id, setTurn, board2, turn, receiveAttack } = props
 
     const [hit, setHit] = useState(false)
 
-    const attackBoard1 = (e) => {
+    const attackBoard2 = (e) => {
         let arr = e.target.id.split('')
         let newArr = []
         newArr.push(+arr[0])
         newArr.push(+arr[1])
-        board2.receiveAttack(newArr)
+        receiveAttack(newArr)
     }
 
     const click = (e) => {
-        if (hit === false /*&& turn === true*/) {
+        if (hit === false && turn === true) {
             e.target.textContent = 'x'
-            attackBoard1(e)
-            console.log(board2)
+            attackBoard2(e)
             setTurn(false)
             setHit(true)
         }
@@ -38,5 +37,33 @@ const CPUCell = (props) => {
         <Container id={id} onClick={click} className='cell' ></Container>
     )
 }
+
+// const CPUCell = (props) => {
+
+//     const { id, setTurn, board2, turn } = props
+
+//     const [hit, setHit] = useState(false)
+
+//     const attackBoard2 = (e) => {
+//         let arr = e.target.id.split('')
+//         let newArr = []
+//         newArr.push(+arr[0])
+//         newArr.push(+arr[1])
+//         board2.receiveAttack(newArr)
+//     }
+
+//     const click = (e) => {
+//         if (hit === false && turn === true) {
+//             e.target.textContent = 'x'
+//             attackBoard2(e)
+//             setTurn(false)
+//             setHit(true)
+//         }
+//     }
+
+//     return (
+//         <Container id={id} onClick={click} className='cell' ></Container>
+//     )
+// }
 
 export default CPUCell;

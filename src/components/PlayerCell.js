@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -12,11 +12,11 @@ font-size: 3vh;
 
 const PlayerCell = (props) => {
 
-    const { id, setTurn, board2, turn } = props
+    const { id, setTurn, board1, turn, player2 } = props
 
     const [hit, setHit] = useState(false)
 
-    
+  
 
     return (
         <Container id={id} className='cell' ></Container>
