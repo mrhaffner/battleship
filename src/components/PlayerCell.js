@@ -12,14 +12,24 @@ font-size: 3vh;
 
 const PlayerCell = (props) => {
 
-    const { id, setTurn, board1, turn, player2 } = props
+    const { id, shots } = props
 
-    const [hit, setHit] = useState(false)
+    const [hit, setHit] = useState(null)
 
-  
+    const displayHit = () => {
+        let shotsStr = JSON.stringify(shots);
+        let newArrStr = JSON.stringify(id);
+        if (shotsStr.includes(newArrStr)) {
+            setHit('x')
+        }
+    }
+   
+    useEffect(() => {
+        displayHit()
+    }, [displayHit])
 
     return (
-        <Container id={id} className='cell' ></Container>
+    <Container id={id} className='cell'>{hit}</Container>
     )
 }
 

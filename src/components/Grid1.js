@@ -46,8 +46,6 @@ const Grid1 = (props) => {
         }
     }, [ships])
 
-
-
     const getRandomCoords = (arr) => {
         const getInt = () => Math.floor(Math.random() * Math.floor(10));
         arr.push(getInt());
@@ -74,8 +72,6 @@ const Grid1 = (props) => {
         return arr;
     };
 
-
-
     useEffect(() => {
         if (turn === false) {
           const move = attack()
@@ -84,13 +80,14 @@ const Grid1 = (props) => {
         }
         
       }, [turn, setTurn, attack, receiveAttack])
+      
 
     const createCells = () => {
         let cells = []
         let x = 0;
         let y = 0;
         for (let i = 1; i < 101 ; i++) {
-            cells.push(<PlayerCell key={i} id={[x, y]} click={null} turn={turn} player2={player2} board1={board1} setTurn={setTurn} />)
+            cells.push(<PlayerCell key={i} id={[x, y]} turn={turn} setTurn={setTurn} shots={shots} />)
             if (x === 9) {
                 x = 0;
                 y++;
