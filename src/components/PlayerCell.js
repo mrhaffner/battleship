@@ -29,7 +29,7 @@ const PlayerCell = (props) => {
     }, [displayHit])
 
     return (
-    <Container id={id} className='cell'>{hit}</Container>
+        <Container id={id} className='cell'>{hit}</Container>
     )
 }
 
