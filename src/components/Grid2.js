@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CPUCell from './CPUCell';
 import styled from 'styled-components';
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 const Container = styled.div`
     display: grid;
@@ -24,26 +24,7 @@ const Grid2 = (props) => {
 
     const [misses, setMisses] = useState([]);
     const [shots, setShots] = useState([]);
-    const receiveAttack = (coords) => {
-        for (let i = 0; i < ships.length; i++) {
-            let shipStr = JSON.stringify(ships[i]);
-            let coordStr = JSON.stringify(coords);
-            if (shipStr.includes(coordStr)) {
-                //probably need to change this, maybe use lodash _.deepClone() or slice?
-                let clone = _.deepClone(hits)
-                clone[i].push(coords)
-                setHits(clone)
-                setShots([...shots, coords]);
-                return;
-            }
-        } 
-        setMisses([...misses, coords]);
-        setShots([...shots, coords]);
-    };
-
-    const [loseStatus, setLoseStatus] = useState(false);
-    const [shipStatus, setShipStatus] = useState([false, false, false, false, false])
-    useEffect(() => {
+    const updateStatus = () => {
         for (let i = 0; i < ships.length; i++) {
             if (ships[i].length === hits[i].length) {
                 //maybe push i into a new state array?
@@ -60,15 +41,56 @@ const Grid2 = (props) => {
                 setLoseStatus(true);
             }
         }
+    }
+
+    const receiveAttack = (coords) => {
+        for (let i = 0; i < ships.length; i++) {
+            let shipStr = JSON.stringify(ships[i]);
+            let coordStr = JSON.stringify(coords);
+            if (shipStr.includes(coordStr)) {
+                //probably need to change this, maybe use lodash _.deepClone() or slice?
+                let clone = _.cloneDeep(hits)
+                clone[i].push(coords)
+                setHits(clone)
+                setShots([...shots, coords]);
+                updateStatus()
+                return;
+            }
+        } 
+        setMisses([...misses, coords]);
+        setShots([...shots, coords]);
+    };
+
+    const [loseStatus, setLoseStatus] = useState(false);
+    const [shipStatus, setShipStatus] = useState([false, false, false, false, false])
+    // useEffect(() => {
+    //     for (let i = 0; i < ships.length; i++) {
+    //         if (ships[i].length === hits[i].length) {
+    //             //maybe push i into a new state array?
+    //             //if state array has length of 5, the setStatus(false)
+    //             let arr = [...shipStatus]
+    //             arr[i] = true
+    //             setShipStatus(arr);
+                
+    //         }
+    //     }
+    //     for (let i = 0; i < ships.length; i++) {
+    //         if (shipStatus[i] === false) break;
+    //         if (i === 4) {
+    //             setLoseStatus(true);
+    //         }
+    //     }
         
-    }, [ships])
+    // },[hits, shipStatus, ships])
+
+    
 
     const createCells = () => {
         let cells = []
         let x = 0;
         let y = 0;
         for (let i = 1; i < 101 ; i++) {
-            cells.push(<CPUCell key={i} id={`${x}${y}`} setTurn={setTurn} turn={turn} receiveAttack={receiveAttack} />)
+            cells.push(<CPUCell key={i} id={`${x}${y}`} setTurn={setTurn} turn={turn} receiveAttack={receiveAttack} ships={ships} />)
             if (x === 9) {
                 x = 0;
                 y++;
@@ -81,12 +103,16 @@ const Grid2 = (props) => {
 
     const log1 = () => console.log(misses)
     const log2 = () => console.log(shots)
+    const log3 = () => console.log(loseStatus)
+    const log4 = () => console.log(shipStatus)
 
     return (
         <Container>
             { createCells() }
-            <button onClick={log1}>Board 1</button>
-            <button onClick={log2}>Board 2</button>
+            <button onClick={log1}>Misses</button>
+            <button onClick={log2}>Shots</button>
+            <button onClick={log3}>Lose Status</button>
+            <button onClick={log4}>Ship Status</button>
         </Container>
     )
 }

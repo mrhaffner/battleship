@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PlayerCell from './PlayerCell'
 import styled from 'styled-components';
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 const Container = styled.div`
     display: grid;
@@ -28,7 +28,7 @@ const Grid1 = (props) => {
             let coordStr = JSON.stringify(coords);
             if (shipStr.includes(coordStr)) {
                 //probably need to change this
-                let clone = _.deepClone(hits)
+                let clone = _.cloneDeep(hits)
                 clone[i].push(coords)
                 setHits(clone)
                 setShots([...shots, coords]);
@@ -41,7 +41,27 @@ const Grid1 = (props) => {
 
     const [loseStatus, setLoseStatus] = useState(false);
     const [shipStatus, setShipStatus] = useState([false, false, false, false, false])
-    useEffect(() => {
+    // useEffect(() => {
+    //     for (let i = 0; i < ships.length; i++) {
+    //         if (ships[i].length === hits[i].length) {
+    //             //maybe push i into a new state array?
+    //             //if state array has length of 5, the setStatus(false)
+    //             let arr = [...shipStatus]
+    //             arr[i] = true
+    //             setShipStatus(arr);
+                
+    //         }
+    //     }
+    //     for (let i = 0; i < ships.length; i++) {
+    //         if (shipStatus[i] === false) break;
+    //         if (i === 4) {
+    //             setLoseStatus(true);
+    //         }
+    //     }
+        
+    // }, [hits, shipStatus, ships])
+
+    const updateStatus = () => {
         for (let i = 0; i < ships.length; i++) {
             if (ships[i].length === hits[i].length) {
                 //maybe push i into a new state array?
@@ -58,8 +78,7 @@ const Grid1 = (props) => {
                 setLoseStatus(true);
             }
         }
-        
-    }, [ships])
+    }
 
     const getRandomCoords = (arr) => {
         const getInt = () => Math.floor(Math.random() * Math.floor(10));
@@ -102,7 +121,7 @@ const Grid1 = (props) => {
         let x = 0;
         let y = 0;
         for (let i = 1; i < 101 ; i++) {
-            cells.push(<PlayerCell key={i} id={[x, y]} turn={turn} setTurn={setTurn} shots={shots} />)
+            cells.push(<PlayerCell key={i} id={[x, y]} turn={turn} setTurn={setTurn} shots={shots} ships={ships} />)
             if (x === 9) {
                 x = 0;
                 y++;
@@ -115,12 +134,16 @@ const Grid1 = (props) => {
 
     const log1 = () => console.log(misses)
     const log2 = () => console.log(shots)
+    const log3 = () => console.log(loseStatus)
+    const log4 = () => console.log(shipStatus)
 
     return (
         <Container>
             { createCells() }
-            <button onClick={log1}>Board 1</button>
-            <button onClick={log2}>Board 2</button>
+            <button onClick={log1}>Misses</button>
+            <button onClick={log2}>Shots</button>
+            <button onClick={log3}>Lose Status</button>
+            <button onClick={log4}>Ship Status</button>
         </Container>
     )
 }

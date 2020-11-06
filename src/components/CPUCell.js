@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-background-color: lightblue;
-height: 3.5vh;
-width: 3.5vh;
-border: .2vh black solid;
-text-align: center;
-font-size: 3vh;
+    background-color: lightblue;
+    height: 3.5vh;
+    width: 3.5vh;
+    border: .2vh black solid;
+    text-align: center;
+    font-size: 3vh;
 `;
 
 const CPUCell = (props) => {
 
-    const { id, setTurn, turn, receiveAttack } = props
+    const { id, setTurn, turn, receiveAttack, ships } = props
 
     const [hit, setHit] = useState(false)
 
@@ -33,8 +33,22 @@ const CPUCell = (props) => {
         }
     }
 
+    const renderShips = () => {
+        let arr = id.split('')
+        let newArr = []
+        newArr.push(+arr[0])
+        newArr.push(+arr[1])
+        let idStr = JSON.stringify(newArr);
+        for (let ship of ships) {
+            let shipStr = JSON.stringify(ship);
+            if (shipStr.includes(idStr)) return 'purple'
+        }
+    }
+
+
+
     return (
-        <Container id={id} onClick={click} className='cell' ></Container>
+        <Container id={id} onClick={click} className='cell' style={{backgroundColor: renderShips()}}></Container>
     )
 }
 

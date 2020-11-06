@@ -12,7 +12,7 @@ font-size: 3vh;
 
 const PlayerCell = (props) => {
 
-    const { id, shots } = props
+    const { id, shots, ships } = props
 
     const [hit, setHit] = useState(null)
 
@@ -28,8 +28,17 @@ const PlayerCell = (props) => {
         displayHit()
     }, [displayHit])
 
+    const renderShips = () => {
+ 
+        let idStr = JSON.stringify(id);
+        for (let ship of ships) {
+            let shipStr = JSON.stringify(ship);
+            if (shipStr.includes(idStr)) return 'purple'
+        }
+    }
+
     return (
-        <Container id={id} className='cell'>{hit}</Container>
+        <Container id={id} className='cell' style={{backgroundColor: renderShips()}}>{hit} </Container>
     )
 }
 
