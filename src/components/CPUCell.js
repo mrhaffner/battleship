@@ -33,7 +33,7 @@ const CPUCell = (props) => {
         }
     }
 
-    const renderShips = () => {
+    const renderColor = (color) => {
         let arr = id.split('')
         let newArr = []
         newArr.push(+arr[0])
@@ -41,14 +41,14 @@ const CPUCell = (props) => {
         let idStr = JSON.stringify(newArr);
         for (let ship of ships) {
             let shipStr = JSON.stringify(ship);
-            if (shipStr.includes(idStr)) return 'purple'
+            if (shipStr.includes(idStr)) return color
         }
     }
 
 
 
     return (
-        <Container id={id} onClick={click} className='cell' style={{backgroundColor: renderShips()}}></Container>
+        <Container id={id} onClick={click} className='cell' style={{backgroundColor: renderColor('purple'), color: renderColor('red')}}></Container>
     )
 }
 
