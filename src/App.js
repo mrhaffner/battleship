@@ -11,17 +11,9 @@ justify-content: space-around;
 const App = () => {
   const [turn, setTurn] = useState(null)
 
-  //this should not appear until board1 has ships
-  //this should dissapear 
-    //maybe not reset but a new game button that pear when game is over
-    //maybe this is stored in state null, true, or false
-
-  
-
   const [boardReady, setBoardReady] = useState(false)
 
   const showStartButton = () => {
-    //if ((turn === true || turn === false) && boardReady === true) {
     if (boardReady === true) {
       return <button onClick={startGame}>Start Game</button>
     } else  {
@@ -53,13 +45,16 @@ const App = () => {
         }
     }
     return ship
-}
+  }
+
+  const [loseStatus1, setLoseStatus1] = useState(false);
+  const [loseStatus2, setLoseStatus2] = useState(false);
 
   return (
     <div>
       <Container>
-        <Grid1 turn={turn} setTurn={setTurn} makeShip={makeShip} setBoardReady={setBoardReady} />
-        <Grid2 turn={turn} setTurn={setTurn} makeShip={makeShip} />
+        <Grid1 turn={turn} setTurn={setTurn} makeShip={makeShip} setBoardReady={setBoardReady} setLoseStatus1={setLoseStatus1} loseStatus1={loseStatus1} />
+        <Grid2 turn={turn} setTurn={setTurn} makeShip={makeShip} setLoseStatus2={setLoseStatus2} loseStatus2={loseStatus2} />
         { showStartButton() }
       </Container>
     </div>

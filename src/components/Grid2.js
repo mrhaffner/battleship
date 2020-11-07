@@ -11,7 +11,7 @@ const Container = styled.div`
 `;
 
 const Grid2 = (props) => {
-    const { setTurn, turn, makeShip } = props
+    const { setTurn, turn, makeShip, setLoseStatus2, loseStatus2 } = props
 
     const [ships, setShips] = useState([]);
     //maybe the inside of this should all be one function that is passed down to both grid from app?
@@ -74,8 +74,6 @@ const Grid2 = (props) => {
         }
         updateShipStatus()
     }, [hits])
-    
-    const [loseStatus, setLoseStatus] = useState(false);
 
     //pass down internals from app?
     useEffect(() => {
@@ -83,7 +81,7 @@ const Grid2 = (props) => {
             for (let i = 0; i < ships.length; i++) {
                 if (shipStatus[i] === false) break;
                 if (i === 4) {
-                    setLoseStatus(true);
+                    setLoseStatus2(true);
                 }
             }
         }
@@ -108,7 +106,7 @@ const Grid2 = (props) => {
 
     const log1 = () => console.log(misses)
     const log2 = () => console.log(shots)
-    const log3 = () => console.log(loseStatus)
+    const log3 = () => console.log(loseStatus2)
     const log4 = () => console.log(shipStatus)
     const log5 = () => console.log(ships)
 
