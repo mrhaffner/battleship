@@ -63,8 +63,6 @@ const App = () => {
     setLoseStatus1(false);
     setLoseStatus2(false);
     setReset(true);
-    //resetboard uis/arrays
-     //maybe a hook in each grid component?
   }
 
   const showNewButton = () => {
@@ -83,7 +81,7 @@ const App = () => {
     <div>
       <Container>
         <Grid1 turn={turn} setTurn={setTurn} makeShip={makeShip} setBoardReady={setBoardReady} setLoseStatus1={setLoseStatus1} loseStatus1={loseStatus1} loseStatus2={loseStatus2} reset={reset} setReset={setReset} />
-        <Grid2 turn={turn} setTurn={setTurn} makeShip={makeShip} setLoseStatus2={setLoseStatus2} loseStatus2={loseStatus2} reset={reset} />
+        <Grid2 turn={turn} setTurn={setTurn} makeShip={makeShip} setLoseStatus2={setLoseStatus2} loseStatus2={loseStatus2} reset={reset} loseStatus1={loseStatus1} setLoseStatus1={setLoseStatus1} setReset={setReset} />
         { showStartButton() }
         { displayLoseStatus() }
         { showNewButton() }

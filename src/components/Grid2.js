@@ -11,11 +11,11 @@ const Container = styled.div`
 `;
 
 const Grid2 = (props) => {
-    const { setTurn, turn, makeShip, setLoseStatus2, loseStatus2, reset } = props
+    const { setTurn, turn, makeShip, setLoseStatus2, reset } = props
 
     const [ships, setShips] = useState([]);
-    //maybe the inside of this should all be one function that is passed down to both grid from app?
-    useEffect(() => { 
+
+    const setCPUShips = () => {
         let arr = []
         let newShip
         const checkShip = () => {
@@ -37,7 +37,7 @@ const Grid2 = (props) => {
             }
         }
         setShips(arr)
-    }, [])
+    }
 
     const [hits, setHits] = useState([[],[],[],[],[]]);
 
@@ -75,7 +75,6 @@ const Grid2 = (props) => {
         updateShipStatus()
     }, [hits])
 
-    //pass down internals from app?
     useEffect(() => {
         const updateLoseStatus = () => {
             for (let i = 0; i < ships.length; i++) {
@@ -91,10 +90,12 @@ const Grid2 = (props) => {
     useEffect(() => {
         if (reset === true) {
             setShips([]);
-            setHits([[[],[],[],[],[]]]);
+            setHits([[],[],[],[],[]]);
             setMisses([]);
             setShots([]);
             setShipStatus([false, false, false, false, false])
+        } else {
+            setCPUShips()
         }
     }, [reset])
 
@@ -114,20 +115,9 @@ const Grid2 = (props) => {
         return cells
     }
 
-    const log1 = () => console.log(misses)
-    const log2 = () => console.log(shots)
-    const log3 = () => console.log(loseStatus2)
-    const log4 = () => console.log(shipStatus)
-    const log5 = () => console.log(ships)
-
     return (
         <Container>
             { createCells() }
-            <button onClick={log1}>Misses</button>
-            <button onClick={log2}>Shots</button>
-            <button onClick={log3}>Lose Status</button>
-            <button onClick={log4}>Ship Status</button>
-            <button onClick={log5}>Ships</button>
         </Container>
     )
 }

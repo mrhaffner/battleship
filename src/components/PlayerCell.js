@@ -40,7 +40,9 @@ const PlayerCell = (props) => {
     }, [reset])
 
     return (
-        <Container id={id} className='cell' style={{backgroundColor: renderColor('purple'), color: renderColor('red')}}>{hit} </Container>
+        <Container id={id} className='cell' style={{backgroundColor: renderColor('purple'), color: renderColor('red')}}>
+            {hit}
+        </Container>
     )
 };
 

@@ -65,7 +65,6 @@ const Grid1 = (props) => {
                 let shipStr = JSON.stringify(ships[i]);
                 let coordStr = JSON.stringify(coords);
                 if (shipStr.includes(coordStr)) {
-                    //probably need to change this
                     let clone = _.cloneDeep(hits)
                     clone[i].push(coords)
                     setHits(clone)
@@ -116,8 +115,6 @@ const Grid1 = (props) => {
           }
           updateShipStatus()
       }, [hits])
-      
-      
   
       useEffect(() => {
           const updateLoseStatus = () => {
@@ -134,7 +131,7 @@ const Grid1 = (props) => {
       useEffect(() => {
         if (reset === true) {
             setShips([]);
-            setHits([[[],[],[],[],[]]]);
+            setHits([[],[],[],[],[]]);
             setMisses([]);
             setShots([]);
             setShipStatus([false, false, false, false, false])
@@ -157,18 +154,9 @@ const Grid1 = (props) => {
         return cells
     }
 
-    const log1 = () => console.log(misses)
-    const log2 = () => console.log(shots)
-    const log3 = () => console.log(loseStatus1)
-    const log4 = () => console.log(shipStatus)
-
     return (
         <Container>
             { createCells() }
-            <button onClick={log1}>Misses</button>
-            <button onClick={log2}>Shots</button>
-            <button onClick={log3}>Lose Status</button>
-            <button onClick={log4}>Ship Status</button>
             { showRandomizeButton() }
         </Container>
     )
