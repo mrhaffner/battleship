@@ -56,7 +56,9 @@ const CPUCell = (props) => {
     }
 
     return (
-        <Container id={id} onClick={click} className='cell' style={{backgroundColor: renderColor('purple'), color: renderColor('red')}}>
+        // use the commented Container to display the CPU ships for testing
+        // <Container id={id} onClick={click} className='cell' style={{backgroundColor: renderColor('purple'), color: renderColor('red')}}>
+        <Container id={id} onClick={click} className='cell' style={{color: renderColor('red')}}>
             { setTextContent() }
         </Container>
     )
