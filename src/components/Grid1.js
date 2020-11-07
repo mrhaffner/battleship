@@ -11,10 +11,11 @@ const Container = styled.div`
 `;
 
 const Grid1 = (props) => {
-    const { turn, setTurn, makeShip } = props
+    const { turn, setTurn, makeShip, setBoardReady } = props
 
     const [ships, setShips] = useState([]);
 
+    //should make a start game button appear on first click
     const randomizeShips = () => {
         let arr = []
         let newShip
@@ -37,6 +38,13 @@ const Grid1 = (props) => {
             }
         }
         setShips(arr)
+        setBoardReady(true)
+    }
+
+    const showRandomizeButton = () => {
+        if (turn === null) {
+            return (<button onClick={randomizeShips}>Randomize Ships</button>)
+        }
     }
 
     const [hits, setHits] = useState([[],[],[],[],[]]);
@@ -152,7 +160,7 @@ const Grid1 = (props) => {
             <button onClick={log2}>Shots</button>
             <button onClick={log3}>Lose Status</button>
             <button onClick={log4}>Ship Status</button>
-            <button onClick={randomizeShips}>Randomize Ships</button>
+            { showRandomizeButton() }
         </Container>
     )
 }
