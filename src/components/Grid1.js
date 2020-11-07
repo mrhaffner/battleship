@@ -18,46 +18,6 @@ const Grid1 = (props) => {
 
     const [misses, setMisses] = useState([]);
     const [shots, setShots] = useState([]);
-    
-    const [loseStatus, setLoseStatus] = useState(false);
-    const [shipStatus, setShipStatus] = useState([false, false, false, false, false])
-    // useEffect(() => {
-    //     for (let i = 0; i < ships.length; i++) {
-    //         if (ships[i].length === hits[i].length) {
-    //             //maybe push i into a new state array?
-    //             //if state array has length of 5, the setStatus(false)
-    //             let arr = [...shipStatus]
-    //             arr[i] = true
-    //             setShipStatus(arr);
-                
-    //         }
-    //     }
-    //     for (let i = 0; i < ships.length; i++) {
-    //         if (shipStatus[i] === false) break;
-    //         if (i === 4) {
-    //             setLoseStatus(true);
-    //         }
-    //     }
-        
-    // }, [hits, shipStatus, ships])
-
-    const updateStatus = () => {
-        let arr = [...shipStatus]
-        for (let i = 0; i < ships.length; i++) {
-            if (ships[i].length === hits[i].length) {
-                console.log(arr, arr[i])
-                arr[i] = true
-                console.log(arr, arr[i])
-            }
-        }
-        setShipStatus(arr);
-        for (let i = 0; i < ships.length; i++) {
-            if (shipStatus[i] === false) break;
-            if (i === 4) {
-                setLoseStatus(true);
-            }
-        }
-    }
 
     const getRandomCoords = (arr) => {
         const getInt = () => Math.floor(Math.random() * Math.floor(10));
@@ -108,6 +68,40 @@ const Grid1 = (props) => {
         }
         
       }, [turn, setTurn, shots, hits, misses, ships])
+
+      const [shipStatus, setShipStatus] = useState([false, false, false, false, false])
+
+      useEffect(() => {
+          const updateShipStatus = () => {
+              let arr = [...shipStatus]
+              for (let i = 0; i < ships.length; i++) {
+                  if (ships[i].length === hits[i].length) {
+                      console.log(arr, arr[i])
+                      arr[i] = true
+                      console.log(arr, arr[i])
+                  }
+              }
+              setShipStatus(arr);
+          }
+          updateShipStatus()
+      }, [hits])
+      
+      const [loseStatus, setLoseStatus] = useState(false);
+  
+      useEffect(() => {
+          const updateLoseStatus = () => {
+              //this needs to run after the first loop
+              //maybe put it into it's own function
+              for (let i = 0; i < ships.length; i++) {
+                  if (shipStatus[i] === false) break;
+                  //make sure to change this back to 4
+                  if (i === 1) {
+                      setLoseStatus(true);
+                  }
+              }
+          }
+          updateLoseStatus()
+      }, [shipStatus])
       
 
     const createCells = () => {
