@@ -15,15 +15,24 @@ const Grid2 = (props) => {
 
     const [ships, setShips] = useState([]);
 
-    //run this on mount
+
     const makeShip = (length) => {
-        //max x/y is 9 minus length
         let ship = []
-        let x = Math.floor(Math.random() * Math.floor(10))
-        let y = Math.floor(Math.random() * Math.floor(10 - length))
-        for (let i = 0; i < length; i++) {
-            ship.push([x, y])
-            y++ //or x
+        let path = Math.floor(Math.random() * Math.floor(2))
+        if (path === 0) {
+            let x = Math.floor(Math.random() * Math.floor(10)) 
+            let y = Math.floor(Math.random() * Math.floor(10 - length))
+            for (let i = 0; i < length; i++) {
+                ship.push([x, y])
+                y++
+            }
+        } else {
+            let y = Math.floor(Math.random() * Math.floor(10)) 
+            let x = Math.floor(Math.random() * Math.floor(10 - length))
+            for (let i = 0; i < length; i++) {
+                ship.push([x, y])
+                x++
+            }
         }
         return ship
     }
@@ -32,6 +41,7 @@ const Grid2 = (props) => {
         let arr = []
         for (let j = 2; j < 6; j++) {
             makeShip(j)
+            //check here if ship has coords already in array, if so get a new ship with same length and check it again
             arr.push(makeShip(j))
         }
         setShips(arr)

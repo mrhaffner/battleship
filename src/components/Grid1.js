@@ -17,13 +17,22 @@ const Grid1 = (props) => {
 
     //run this on mount
     const makeShip = (length) => {
-        //max x/y is 9 minus length
         let ship = []
-        let x = Math.floor(Math.random() * Math.floor(10))
-        let y = Math.floor(Math.random() * Math.floor(10 - length))
-        for (let i = 0; i < length; i++) {
-            ship.push([x, y])
-            y++ //or x
+        let path = Math.floor(Math.random() * Math.floor(2))
+        if (path === 0) {
+            let x = Math.floor(Math.random() * Math.floor(10)) 
+            let y = Math.floor(Math.random() * Math.floor(10 - length))
+            for (let i = 0; i < length; i++) {
+                ship.push([x, y])
+                y++
+            }
+        } else {
+            let y = Math.floor(Math.random() * Math.floor(10)) 
+            let x = Math.floor(Math.random() * Math.floor(10 - length))
+            for (let i = 0; i < length; i++) {
+                ship.push([x, y])
+                x++
+            }
         }
         return ship
     }
