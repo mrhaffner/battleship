@@ -13,7 +13,30 @@ const Container = styled.div`
 const Grid2 = (props) => {
     const { setTurn, turn } = props
 
-    const [ships, setShips] = useState([[[0,0],[0,1]],[[1,0],[1,1],[1,2]]]);
+    const [ships, setShips] = useState([]);
+
+    //run this on mount
+    const makeShip = (length) => {
+        //max x/y is 9 minus length
+        let ship = []
+        let x = Math.floor(Math.random() * Math.floor(10))
+        let y = Math.floor(Math.random() * Math.floor(10 - length))
+        for (let i = 0; i < length; i++) {
+            ship.push([x, y])
+            y++ //or x
+        }
+        return ship
+    }
+
+    useEffect(() => {
+        let arr = []
+        for (let j = 2; j < 6; j++) {
+            makeShip(j)
+            arr.push(makeShip(j))
+        }
+        setShips(arr)
+    }, [])
+
     const [hits, setHits] = useState([[],[],[],[],[]]);
 
     const [misses, setMisses] = useState([]);
@@ -56,12 +79,9 @@ const Grid2 = (props) => {
 
     useEffect(() => {
         const updateLoseStatus = () => {
-            //this needs to run after the first loop
-            //maybe put it into it's own function
             for (let i = 0; i < ships.length; i++) {
                 if (shipStatus[i] === false) break;
-                //make sure to change this back to 4
-                if (i === 1) {
+                if (i === 4) {
                     setLoseStatus(true);
                 }
             }
@@ -89,6 +109,7 @@ const Grid2 = (props) => {
     const log2 = () => console.log(shots)
     const log3 = () => console.log(loseStatus)
     const log4 = () => console.log(shipStatus)
+    const log5 = () => console.log(ships)
 
     return (
         <Container>
@@ -98,6 +119,7 @@ const Grid2 = (props) => {
             <button onClick={log3}>Lose Status</button>
             {/* <button onClick={updateShipStatus}>Update Ship Status</button> */}
             <button onClick={log4}>Ship Status</button>
+            <button onClick={log5}>Ships</button>
         </Container>
     )
 }
