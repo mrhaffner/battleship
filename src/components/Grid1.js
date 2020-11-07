@@ -15,7 +15,7 @@ const Grid1 = (props) => {
 
     const [ships, setShips] = useState([]);
 
-    useEffect(() => {
+    const randomizeShips = () => {
         let arr = []
         let newShip
         const checkShip = () => {
@@ -37,7 +37,7 @@ const Grid1 = (props) => {
             }
         }
         setShips(arr)
-    }, [])
+    }
 
     const [hits, setHits] = useState([[],[],[],[],[]]);
 
@@ -152,6 +152,7 @@ const Grid1 = (props) => {
             <button onClick={log2}>Shots</button>
             <button onClick={log3}>Lose Status</button>
             <button onClick={log4}>Ship Status</button>
+            <button onClick={randomizeShips}>Randomize Ships</button>
         </Container>
     )
 }

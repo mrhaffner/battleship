@@ -13,8 +13,15 @@ const App = () => {
 
   useEffect(() => {
     //this will need to happen after ship selection in the future
-    setTurn(true)
+    //setTurn(true)
   }, [])
+
+  //this should not appear until board1 has ships
+  //this should dissapear/change into a reset button after clicked
+    //maybe this is stored in state null, true, or false
+  const startGame = () => {
+    setTurn(true)
+  }
 
   const makeShip = (length) => {
     let ship = []
@@ -42,6 +49,7 @@ const App = () => {
       <Container>
         <Grid1 turn={turn} setTurn={setTurn} makeShip={makeShip} />
         <Grid2 turn={turn} setTurn={setTurn} makeShip={makeShip} />
+        <button onClick={startGame}>Start Game</button>
       </Container>
     </div>
   );

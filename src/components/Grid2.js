@@ -15,7 +15,7 @@ const Grid2 = (props) => {
 
     const [ships, setShips] = useState([]);
     //maybe the inside of this should all be one function that is passed down to both grid from app?
-    useEffect(() => {
+    useEffect(() => { 
         let arr = []
         let newShip
         const checkShip = () => {
@@ -67,9 +67,7 @@ const Grid2 = (props) => {
             let arr = [...shipStatus]
             for (let i = 0; i < ships.length; i++) {
                 if (ships[i].length === hits[i].length) {
-                    console.log(arr, arr[i])
                     arr[i] = true
-                    console.log(arr, arr[i])
                 }
             }
             setShipStatus(arr);
@@ -120,7 +118,6 @@ const Grid2 = (props) => {
             <button onClick={log1}>Misses</button>
             <button onClick={log2}>Shots</button>
             <button onClick={log3}>Lose Status</button>
-            {/* <button onClick={updateShipStatus}>Update Ship Status</button> */}
             <button onClick={log4}>Ship Status</button>
             <button onClick={log5}>Ships</button>
         </Container>
