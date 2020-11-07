@@ -15,7 +15,6 @@ const Grid2 = (props) => {
 
     const [ships, setShips] = useState([]);
 
-
     const makeShip = (length) => {
         let ship = []
         let path = Math.floor(Math.random() * Math.floor(2))
@@ -39,10 +38,27 @@ const Grid2 = (props) => {
 
     useEffect(() => {
         let arr = []
+        let newShip
+        const checkShip = () => {
+            for (let ship of newShip) {
+                let shipStr = JSON.stringify(ship);
+                let arrStr = JSON.stringify(arr)
+                if (arrStr.includes(shipStr)) {
+                    return true
+                }
+            }
+        }
         for (let j = 2; j < 6; j++) {
-            makeShip(j)
+            newShip = makeShip(j)
             //check here if ship has coords already in array, if so get a new ship with same length and check it again
-            arr.push(makeShip(j))
+            //loop through newShip
+                //stringify that
+            
+            if (checkShip()) {
+                j--
+            } else {
+                arr.push(newShip)
+            }
         }
         setShips(arr)
     }, [])

@@ -39,9 +39,23 @@ const Grid1 = (props) => {
 
     useEffect(() => {
         let arr = []
+        let newShip
+        const checkShip = () => {
+            for (let ship of newShip) {
+                let shipStr = JSON.stringify(ship);
+                let arrStr = JSON.stringify(arr)
+                if (arrStr.includes(shipStr)) {
+                    return true
+                }
+            }
+        }
         for (let j = 2; j < 6; j++) {
-            makeShip(j)
-            arr.push(makeShip(j))
+            newShip = makeShip(j)
+            if (checkShip()) {
+                j--
+            } else {
+                arr.push(newShip)
+            }
         }
         setShips(arr)
     }, [])
