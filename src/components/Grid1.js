@@ -15,30 +15,10 @@ const Grid1 = (props) => {
 
     const [ships, setShips] = useState([[[0,0],[0,1]],[[1,0],[1,1],[1,2]]]);
     const [hits, setHits] = useState([[],[],[],[],[]]);
-    // const addShip = (length, ...location) => {
-    //     //need to Import Ship or something
-    //     setShips([...ships, Ship(length, ...location)])
-    // };
 
     const [misses, setMisses] = useState([]);
     const [shots, setShots] = useState([]);
-    const receiveAttack = (coords) => {
-        for (let i = 0; i < ships.length; i++) {
-            let shipStr = JSON.stringify(ships[i]);
-            let coordStr = JSON.stringify(coords);
-            if (shipStr.includes(coordStr)) {
-                //probably need to change this
-                let clone = _.cloneDeep(hits)
-                clone[i].push(coords)
-                setHits(clone)
-                setShots([...shots, coords]);
-                return;
-            }
-        } 
-        setMisses([...misses, coords]);
-        setShots([...shots, coords]);
-    };
-
+    
     const [loseStatus, setLoseStatus] = useState(false);
     const [shipStatus, setShipStatus] = useState([false, false, false, false, false])
     // useEffect(() => {
@@ -62,16 +42,15 @@ const Grid1 = (props) => {
     // }, [hits, shipStatus, ships])
 
     const updateStatus = () => {
+        let arr = [...shipStatus]
         for (let i = 0; i < ships.length; i++) {
             if (ships[i].length === hits[i].length) {
-                //maybe push i into a new state array?
-                //if state array has length of 5, the setStatus(false)
-                let arr = [...shipStatus]
+                console.log(arr, arr[i])
                 arr[i] = true
-                setShipStatus(arr);
-                
+                console.log(arr, arr[i])
             }
         }
+        setShipStatus(arr);
         for (let i = 0; i < ships.length; i++) {
             if (shipStatus[i] === false) break;
             if (i === 4) {
@@ -87,33 +66,48 @@ const Grid1 = (props) => {
         return arr
     }
 
-    const checkShots = (arr) => {
-        const arrStr = JSON.stringify(arr);
-        const shotsStr = JSON.stringify(shots);
-        if (!shotsStr.includes(arrStr)) {
-            return arr
-        } else {
-            arr = [];
-            getRandomCoords(arr);
-            return checkShots(arr);
-        }
-    }
-
-    const attack = () => {
-        let arr = [];
-        getRandomCoords(arr);
-        arr = checkShots(arr);
-        return arr;
-    };
-
     useEffect(() => {
+        const receiveAttack = (coords) => {
+            for (let i = 0; i < ships.length; i++) {
+                let shipStr = JSON.stringify(ships[i]);
+                let coordStr = JSON.stringify(coords);
+                if (shipStr.includes(coordStr)) {
+                    //probably need to change this
+                    let clone = _.cloneDeep(hits)
+                    clone[i].push(coords)
+                    setHits(clone)
+                    setShots([...shots, coords]);
+                    return;
+                }
+            } 
+            setMisses([...misses, coords]);
+            setShots([...shots, coords]);
+        };
+    
+        const checkShots = (arr) => {
+            const arrStr = JSON.stringify(arr);
+            const shotsStr = JSON.stringify(shots);
+            if (!shotsStr.includes(arrStr)) {
+                return arr
+            } else {
+                arr = [];
+                getRandomCoords(arr);
+                return checkShots(arr);
+            }
+        }
+        const attack = () => {
+            let arr = [];
+            getRandomCoords(arr);
+            arr = checkShots(arr);
+            return arr;
+        };
         if (turn === false) {
           const move = attack()
           receiveAttack(move)
           setTurn(true)
         }
         
-      }, [turn, setTurn, attack, receiveAttack])
+      }, [turn, setTurn, shots, hits, misses, ships])
       
 
     const createCells = () => {

@@ -11,7 +11,6 @@ const Container = styled.div`
 `;
 
 const CPUCell = (props) => {
-
     const { id, setTurn, turn, receiveAttack, ships } = props
 
     const [hit, setHit] = useState(false)
@@ -44,8 +43,6 @@ const CPUCell = (props) => {
             if (shipStr.includes(idStr)) return color
         }
     }
-
-
 
     return (
         <Container id={id} onClick={click} className='cell' style={{backgroundColor: renderColor('purple'), color: renderColor('red')}}></Container>

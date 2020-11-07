@@ -13,47 +13,22 @@ const Container = styled.div`
 const Grid2 = (props) => {
     const { setTurn, turn } = props
 
-    //can probably move the functions to app and pass them down as props to both gameboards
     const [ships, setShips] = useState([[[0,0],[0,1]],[[1,0],[1,1],[1,2]]]);
     const [hits, setHits] = useState([[],[],[],[],[]]);
-    
-    // const addShip = (length, ...location) => {
-    //     //need to Import Ship or something
-    //     setShips([...ships, Ship(length, ...location)])
-    // };
 
     const [misses, setMisses] = useState([]);
     const [shots, setShots] = useState([]);
-    const updateStatus = () => {
-        for (let i = 0; i < ships.length; i++) {
-            if (ships[i].length === hits[i].length) {
-                //maybe push i into a new state array?
-                //if state array has length of 5, the setStatus(false)
-                let arr = [...shipStatus]
-                arr[i] = true
-                setShipStatus(arr);
-                
-            }
-        }
-        for (let i = 0; i < ships.length; i++) {
-            if (shipStatus[i] === false) break;
-            if (i === 4) {
-                setLoseStatus(true);
-            }
-        }
-    }
 
     const receiveAttack = (coords) => {
         for (let i = 0; i < ships.length; i++) {
             let shipStr = JSON.stringify(ships[i]);
             let coordStr = JSON.stringify(coords);
             if (shipStr.includes(coordStr)) {
-                //probably need to change this, maybe use lodash _.deepClone() or slice?
                 let clone = _.cloneDeep(hits)
                 clone[i].push(coords)
                 setHits(clone)
                 setShots([...shots, coords]);
-                updateStatus()
+                //had updateStatus() here for testing
                 return;
             }
         } 
@@ -63,6 +38,30 @@ const Grid2 = (props) => {
 
     const [loseStatus, setLoseStatus] = useState(false);
     const [shipStatus, setShipStatus] = useState([false, false, false, false, false])
+
+    const updateStatus = () => {
+        let arr = [...shipStatus]
+        for (let i = 0; i < ships.length; i++) {
+            if (ships[i].length === hits[i].length) {
+                console.log(arr, arr[i])
+                arr[i] = true
+                console.log(arr, arr[i])
+            }
+        }
+        setShipStatus(arr);
+        //this needs to run after the first loop
+        //maybe put it into it's own function
+        for (let i = 0; i < ships.length; i++) {
+            if (shipStatus[i] === false) break;
+            //make sure to change this back to 4
+            if (i === 1) {
+                setLoseStatus(true);
+            }
+        }
+    }
+
+
+
     // useEffect(() => {
     //     for (let i = 0; i < ships.length; i++) {
     //         if (ships[i].length === hits[i].length) {
@@ -112,6 +111,7 @@ const Grid2 = (props) => {
             <button onClick={log1}>Misses</button>
             <button onClick={log2}>Shots</button>
             <button onClick={log3}>Lose Status</button>
+            <button onClick={updateStatus}>Update Status</button>
             <button onClick={log4}>Ship Status</button>
         </Container>
     )
