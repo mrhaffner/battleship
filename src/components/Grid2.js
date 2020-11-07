@@ -11,7 +11,7 @@ const Container = styled.div`
 `;
 
 const Grid2 = (props) => {
-    const { setTurn, turn, makeShip, setLoseStatus2, loseStatus2 } = props
+    const { setTurn, turn, makeShip, setLoseStatus2, loseStatus2, reset } = props
 
     const [ships, setShips] = useState([]);
     //maybe the inside of this should all be one function that is passed down to both grid from app?
@@ -88,12 +88,22 @@ const Grid2 = (props) => {
         updateLoseStatus()
     }, [shipStatus])
     
+    useEffect(() => {
+        if (reset === true) {
+            setShips([]);
+            setHits([[[],[],[],[],[]]]);
+            setMisses([]);
+            setShots([]);
+            setShipStatus([false, false, false, false, false])
+        }
+    }, [reset])
+
     const createCells = () => {
         let cells = []
         let x = 0;
         let y = 0;
         for (let i = 1; i < 101 ; i++) {
-            cells.push(<CPUCell key={i} id={`${x}${y}`} setTurn={setTurn} turn={turn} receiveAttack={receiveAttack} ships={ships} />)
+            cells.push(<CPUCell key={i} id={`${x}${y}`} setTurn={setTurn} turn={turn} receiveAttack={receiveAttack} ships={ships} reset={reset} />)
             if (x === 9) {
                 x = 0;
                 y++;

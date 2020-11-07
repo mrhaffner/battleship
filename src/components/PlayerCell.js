@@ -11,8 +11,8 @@ font-size: 3vh;
 `;
 
 const PlayerCell = (props) => {
-    const { id, shots, ships } = props;
-    const [hit, setHit] = useState(null);
+    const { id, shots, ships, reset } = props;
+    const [hit, setHit] = useState(false);
 
     useEffect(() => {
         const displayHit = () => {
@@ -32,6 +32,12 @@ const PlayerCell = (props) => {
             if (shipStr.includes(idStr)) return color;
         };
     };
+
+    useEffect(() => {
+        if (reset === true) {
+            setHit(false);
+        }
+    }, [reset])
 
     return (
         <Container id={id} className='cell' style={{backgroundColor: renderColor('purple'), color: renderColor('red')}}>{hit} </Container>

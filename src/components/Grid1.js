@@ -11,7 +11,7 @@ const Container = styled.div`
 `;
 
 const Grid1 = (props) => {
-    const { turn, setTurn, makeShip, setBoardReady, setLoseStatus1, loseStatus1 } = props
+    const { turn, setTurn, makeShip, setBoardReady, setLoseStatus1, loseStatus1, loseStatus2, setReset, reset } = props
 
     const [ships, setShips] = useState([]);
 
@@ -38,10 +38,11 @@ const Grid1 = (props) => {
         }
         setShips(arr)
         setBoardReady(true)
+        setReset(false)
     }
 
     const showRandomizeButton = () => {
-        if (turn === null) {
+        if (turn === null && loseStatus1 === false && loseStatus2 === false) {
             return (<button onClick={randomizeShips}>Randomize Ships</button>)
         }
     }
@@ -130,13 +131,22 @@ const Grid1 = (props) => {
           updateLoseStatus()
       }, [shipStatus])
       
+      useEffect(() => {
+        if (reset === true) {
+            setShips([]);
+            setHits([[[],[],[],[],[]]]);
+            setMisses([]);
+            setShots([]);
+            setShipStatus([false, false, false, false, false])
+        }
+    }, [reset])
 
     const createCells = () => {
         let cells = []
         let x = 0;
         let y = 0;
         for (let i = 1; i < 101 ; i++) {
-            cells.push(<PlayerCell key={i} id={[x, y]} turn={turn} setTurn={setTurn} shots={shots} ships={ships} />)
+            cells.push(<PlayerCell key={i} id={[x, y]} turn={turn} setTurn={setTurn} shots={shots} ships={ships} reset={reset} />)
             if (x === 9) {
                 x = 0;
                 y++;

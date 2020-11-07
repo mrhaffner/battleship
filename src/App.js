@@ -16,8 +16,6 @@ const App = () => {
   const showStartButton = () => {
     if (boardReady === true) {
       return <button onClick={startGame}>Start Game</button>
-    } else  {
-      return null
     }
   }
 
@@ -49,13 +47,46 @@ const App = () => {
 
   const [loseStatus1, setLoseStatus1] = useState(false);
   const [loseStatus2, setLoseStatus2] = useState(false);
+  
+  const displayLoseStatus = () => {
+    if (loseStatus1 === true) {
+      return (<h2>CPU Wins</h2>)
+    } else if (loseStatus2 === true) {
+      return (<h2>Human Wins</h2>)
+    }
+  }
+
+  const [reset, setReset] = useState(false);
+
+  const newGame = () => {
+    setTurn(null);
+    setLoseStatus1(false);
+    setLoseStatus2(false);
+    setReset(true);
+    //resetboard uis/arrays
+     //maybe a hook in each grid component?
+  }
+
+  const showNewButton = () => {
+    if (loseStatus1 === true || loseStatus2 === true) {
+      return <button onClick={newGame}>New Game</button>
+    }
+  }
+
+  useEffect(() => {
+    if (loseStatus1 === true || loseStatus2 === true) {
+      setTurn(null)
+    }
+  }, [loseStatus1, loseStatus2])
 
   return (
     <div>
       <Container>
-        <Grid1 turn={turn} setTurn={setTurn} makeShip={makeShip} setBoardReady={setBoardReady} setLoseStatus1={setLoseStatus1} loseStatus1={loseStatus1} />
-        <Grid2 turn={turn} setTurn={setTurn} makeShip={makeShip} setLoseStatus2={setLoseStatus2} loseStatus2={loseStatus2} />
+        <Grid1 turn={turn} setTurn={setTurn} makeShip={makeShip} setBoardReady={setBoardReady} setLoseStatus1={setLoseStatus1} loseStatus1={loseStatus1} loseStatus2={loseStatus2} reset={reset} setReset={setReset} />
+        <Grid2 turn={turn} setTurn={setTurn} makeShip={makeShip} setLoseStatus2={setLoseStatus2} loseStatus2={loseStatus2} reset={reset} />
         { showStartButton() }
+        { displayLoseStatus() }
+        { showNewButton() }
       </Container>
     </div>
   );
