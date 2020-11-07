@@ -11,31 +11,9 @@ const Container = styled.div`
 `;
 
 const Grid1 = (props) => {
-    const { turn, setTurn } = props
+    const { turn, setTurn, makeShip } = props
 
     const [ships, setShips] = useState([]);
-
-    //run this on mount
-    const makeShip = (length) => {
-        let ship = []
-        let path = Math.floor(Math.random() * Math.floor(2))
-        if (path === 0) {
-            let x = Math.floor(Math.random() * Math.floor(10)) 
-            let y = Math.floor(Math.random() * Math.floor(10 - length))
-            for (let i = 0; i < length; i++) {
-                ship.push([x, y])
-                y++
-            }
-        } else {
-            let y = Math.floor(Math.random() * Math.floor(10)) 
-            let x = Math.floor(Math.random() * Math.floor(10 - length))
-            for (let i = 0; i < length; i++) {
-                ship.push([x, y])
-                x++
-            }
-        }
-        return ship
-    }
 
     useEffect(() => {
         let arr = []
@@ -49,6 +27,7 @@ const Grid1 = (props) => {
                 }
             }
         }
+        arr.push(makeShip(3))
         for (let j = 2; j < 6; j++) {
             newShip = makeShip(j)
             if (checkShip()) {
@@ -122,9 +101,7 @@ const Grid1 = (props) => {
               let arr = [...shipStatus]
               for (let i = 0; i < ships.length; i++) {
                   if (ships[i].length === hits[i].length) {
-                      console.log(arr, arr[i])
                       arr[i] = true
-                      console.log(arr, arr[i])
                   }
               }
               setShipStatus(arr);

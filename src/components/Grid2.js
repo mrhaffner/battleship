@@ -11,31 +11,10 @@ const Container = styled.div`
 `;
 
 const Grid2 = (props) => {
-    const { setTurn, turn } = props
+    const { setTurn, turn, makeShip } = props
 
     const [ships, setShips] = useState([]);
-
-    const makeShip = (length) => {
-        let ship = []
-        let path = Math.floor(Math.random() * Math.floor(2))
-        if (path === 0) {
-            let x = Math.floor(Math.random() * Math.floor(10)) 
-            let y = Math.floor(Math.random() * Math.floor(10 - length))
-            for (let i = 0; i < length; i++) {
-                ship.push([x, y])
-                y++
-            }
-        } else {
-            let y = Math.floor(Math.random() * Math.floor(10)) 
-            let x = Math.floor(Math.random() * Math.floor(10 - length))
-            for (let i = 0; i < length; i++) {
-                ship.push([x, y])
-                x++
-            }
-        }
-        return ship
-    }
-
+    //maybe the inside of this should all be one function that is passed down to both grid from app?
     useEffect(() => {
         let arr = []
         let newShip
@@ -48,12 +27,9 @@ const Grid2 = (props) => {
                 }
             }
         }
+        arr.push(makeShip(3))
         for (let j = 2; j < 6; j++) {
             newShip = makeShip(j)
-            //check here if ship has coords already in array, if so get a new ship with same length and check it again
-            //loop through newShip
-                //stringify that
-            
             if (checkShip()) {
                 j--
             } else {
@@ -103,6 +79,7 @@ const Grid2 = (props) => {
     
     const [loseStatus, setLoseStatus] = useState(false);
 
+    //pass down internals from app?
     useEffect(() => {
         const updateLoseStatus = () => {
             for (let i = 0; i < ships.length; i++) {

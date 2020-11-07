@@ -16,11 +16,32 @@ const App = () => {
     setTurn(true)
   }, [])
 
+  const makeShip = (length) => {
+    let ship = []
+    let path = Math.floor(Math.random() * Math.floor(2))
+    if (path === 0) {
+        let x = Math.floor(Math.random() * Math.floor(10)) 
+        let y = Math.floor(Math.random() * Math.floor(10 - length))
+        for (let i = 0; i < length; i++) {
+            ship.push([x, y])
+            y++
+        }
+    } else {
+        let y = Math.floor(Math.random() * Math.floor(10)) 
+        let x = Math.floor(Math.random() * Math.floor(10 - length))
+        for (let i = 0; i < length; i++) {
+            ship.push([x, y])
+            x++
+        }
+    }
+    return ship
+}
+
   return (
     <div>
       <Container>
-        <Grid1 turn={turn} setTurn={setTurn} />
-        <Grid2 turn={turn} setTurn={setTurn} />
+        <Grid1 turn={turn} setTurn={setTurn} makeShip={makeShip} />
+        <Grid2 turn={turn} setTurn={setTurn} makeShip={makeShip} />
       </Container>
     </div>
   );
