@@ -45,6 +45,30 @@ const App = () => {
     return ship
   }
 
+  const setUpShips = (setShips) => {
+    let arr = []
+    let newShip
+    const checkShip = () => {
+        for (let ship of newShip) {
+            let shipStr = JSON.stringify(ship);
+            let arrStr = JSON.stringify(arr)
+            if (arrStr.includes(shipStr)) {
+                return true
+            }
+        }
+    }
+    arr.push(makeShip(3))
+    for (let j = 2; j < 6; j++) {
+        newShip = makeShip(j)
+        if (checkShip()) {
+            j--
+        } else {
+            arr.push(newShip)
+        }
+    }
+    setShips(arr)
+}
+
   const [loseStatus1, setLoseStatus1] = useState(false);
   const [loseStatus2, setLoseStatus2] = useState(false);
   
@@ -80,8 +104,8 @@ const App = () => {
   return (
     <div>
       <Container>
-        <Grid1 turn={turn} setTurn={setTurn} makeShip={makeShip} setBoardReady={setBoardReady} setLoseStatus1={setLoseStatus1} loseStatus1={loseStatus1} loseStatus2={loseStatus2} reset={reset} setReset={setReset} />
-        <Grid2 turn={turn} setTurn={setTurn} makeShip={makeShip} setLoseStatus2={setLoseStatus2} loseStatus2={loseStatus2} reset={reset} loseStatus1={loseStatus1} setLoseStatus1={setLoseStatus1} setReset={setReset} />
+        <Grid1 turn={turn} setTurn={setTurn} setBoardReady={setBoardReady} setLoseStatus1={setLoseStatus1} loseStatus1={loseStatus1} loseStatus2={loseStatus2} reset={reset} setReset={setReset} setUpShips={setUpShips} />
+        <Grid2 turn={turn} setTurn={setTurn} setLoseStatus2={setLoseStatus2} loseStatus2={loseStatus2} reset={reset} loseStatus1={loseStatus1} setLoseStatus1={setLoseStatus1} setReset={setReset} setUpShips={setUpShips} />
         { showStartButton() }
         { displayLoseStatus() }
         { showNewButton() }

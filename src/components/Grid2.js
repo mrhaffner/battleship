@@ -11,36 +11,10 @@ const Container = styled.div`
 `;
 
 const Grid2 = (props) => {
-    const { setTurn, turn, makeShip, setLoseStatus2, reset } = props
+    const { setTurn, turn, setLoseStatus2, reset, setUpShips } = props
 
     const [ships, setShips] = useState([]);
-
-    const setCPUShips = () => {
-        let arr = []
-        let newShip
-        const checkShip = () => {
-            for (let ship of newShip) {
-                let shipStr = JSON.stringify(ship);
-                let arrStr = JSON.stringify(arr)
-                if (arrStr.includes(shipStr)) {
-                    return true
-                }
-            }
-        }
-        arr.push(makeShip(3))
-        for (let j = 2; j < 6; j++) {
-            newShip = makeShip(j)
-            if (checkShip()) {
-                j--
-            } else {
-                arr.push(newShip)
-            }
-        }
-        setShips(arr)
-    }
-
     const [hits, setHits] = useState([[],[],[],[],[]]);
-
     const [misses, setMisses] = useState([]);
     const [shots, setShots] = useState([]);
 
@@ -95,7 +69,7 @@ const Grid2 = (props) => {
             setShots([]);
             setShipStatus([false, false, false, false, false])
         } else {
-            setCPUShips()
+            setUpShips(setShips)
         }
     }, [reset])
 

@@ -11,32 +11,12 @@ const Container = styled.div`
 `;
 
 const Grid1 = (props) => {
-    const { turn, setTurn, makeShip, setBoardReady, setLoseStatus1, loseStatus1, loseStatus2, setReset, reset } = props
+    const { turn, setTurn, setBoardReady, setLoseStatus1, loseStatus1, loseStatus2, setReset, reset, setUpShips } = props
 
     const [ships, setShips] = useState([]);
 
     const randomizeShips = () => {
-        let arr = []
-        let newShip
-        const checkShip = () => {
-            for (let ship of newShip) {
-                let shipStr = JSON.stringify(ship);
-                let arrStr = JSON.stringify(arr)
-                if (arrStr.includes(shipStr)) {
-                    return true
-                }
-            }
-        }
-        arr.push(makeShip(3))
-        for (let j = 2; j < 6; j++) {
-            newShip = makeShip(j)
-            if (checkShip()) {
-                j--
-            } else {
-                arr.push(newShip)
-            }
-        }
-        setShips(arr)
+        setUpShips(setShips)
         setBoardReady(true)
         setReset(false)
     }
